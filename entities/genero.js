@@ -1,9 +1,20 @@
-class Genero {
-    constructor(id, nome, descricao) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-    }
-}
+import { DataTypes } from 'sequelize';
+import sequelize from '../config.js';
 
-module.exports = Genero;
+const Genero = sequelize.define('Genero', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    nome: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    descricao: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    }
+});
+
+export default Genero;

@@ -1,0 +1,254 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-08-04T22:06:15.168Z",
+    "end": "2024-08-04T22:06:15.866Z",
+    "duration": 698,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d9710025-303d-433f-b6a0-b11c7645e841",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "af094ad5-1593-4a0a-a83a-d9ebda6f5ee2",
+          "title": "API Filmes",
+          "fullFile": "C:\\Users\\anita\\Music\\LPE\\Backend\\test\\filmeTest.js",
+          "file": "\\test\\filmeTest.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"API Filmes\"",
+              "fullTitle": "API Filmes \"before all\" hook in \"API Filmes\"",
+              "timedOut": false,
+              "duration": 478,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "process.env.PORT = 3004; // Definindo uma porta diferente para os testes\nchai.request(app)\n    .post('/login')\n    .send({ email: 'admin@ifsul.edu.br', senha: '123456' })\n    .end((err, res) => {\n        res.should.have.status(200);\n        token = res.body.token;\n        done();\n    });",
+              "err": {},
+              "uuid": "a9f3057e-5fe1-4eac-8d56-334b6ccb26f7",
+              "parentUUID": "af094ad5-1593-4a0a-a83a-d9ebda6f5ee2",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve listar todos os filmes",
+              "fullTitle": "API Filmes Deve listar todos os filmes",
+              "timedOut": false,
+              "duration": 35,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "chai.request(app)\n    .get('/filme')\n    .set('Authorization', `Bearer ${token}`)\n    .end((err, res) => {\n        res.should.have.status(200);\n        res.body.should.be.a('array');\n        done();\n    });",
+              "err": {},
+              "uuid": "d6de19ae-0a6c-4050-8db1-af2294664f95",
+              "parentUUID": "af094ad5-1593-4a0a-a83a-d9ebda6f5ee2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve adicionar um novo filme",
+              "fullTitle": "API Filmes Deve adicionar um novo filme",
+              "timedOut": false,
+              "duration": 42,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const filme = {\n    titulo: 'Novo Filme',\n    descricao: 'Descrição do novo filme',\n    ano_lancamento: 2023,\n    genero_id: 1\n};\nchai.request(app)\n    .post('/filme')\n    .set('Authorization', `Bearer ${token}`)\n    .send(filme)\n    .end((err, res) => {\n        res.should.have.status(200);\n        res.body.should.be.a('object');\n        res.body.should.have.property('titulo').eql('Novo Filme');\n        done();\n    });",
+              "err": {},
+              "uuid": "a9a6c5cf-f61d-4891-9cec-b65554aa02b2",
+              "parentUUID": "af094ad5-1593-4a0a-a83a-d9ebda6f5ee2",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d6de19ae-0a6c-4050-8db1-af2294664f95",
+            "a9a6c5cf-f61d-4891-9cec-b65554aa02b2"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 77,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "89f48159-6680-4f93-9e1c-6de574807b36",
+          "title": "API Gêneros",
+          "fullFile": "C:\\Users\\anita\\Music\\LPE\\Backend\\test\\generoTest.js",
+          "file": "\\test\\generoTest.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"API Gêneros\"",
+              "fullTitle": "API Gêneros \"before all\" hook in \"API Gêneros\"",
+              "timedOut": false,
+              "duration": 33,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "chai.request(app)\n    .post('/login')\n    .send({ email: 'admin@ifsul.edu.br', senha: '123456' })\n    .end((err, res) => {\n        res.should.have.status(200);\n        token = res.body.token;\n        done();\n    });",
+              "err": {},
+              "uuid": "54046516-1c50-4e8e-bfb3-bc96664b7111",
+              "parentUUID": "89f48159-6680-4f93-9e1c-6de574807b36",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve listar todos os gêneros",
+              "fullTitle": "API Gêneros Deve listar todos os gêneros",
+              "timedOut": false,
+              "duration": 26,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "chai.request(app)\n    .get('/genero')\n    .set('Authorization', `Bearer ${token}`)\n    .end((err, res) => {\n        res.should.have.status(200);\n        res.body.should.be.a('array');\n        done();\n    });",
+              "err": {},
+              "uuid": "55a83e9b-3cb1-4ffc-86ec-f7a84328c54a",
+              "parentUUID": "89f48159-6680-4f93-9e1c-6de574807b36",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve adicionar um novo gênero",
+              "fullTitle": "API Gêneros Deve adicionar um novo gênero",
+              "timedOut": false,
+              "duration": 41,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const genero = {\n    nome: 'Novo Gênero',\n    descricao: 'Descrição do novo gênero'\n};\nchai.request(app)\n    .post('/genero')\n    .set('Authorization', `Bearer ${token}`)\n    .send(genero)\n    .end((err, res) => {\n        res.should.have.status(200);\n        res.body.should.be.a('object');\n        res.body.should.have.property('nome').eql('Novo Gênero');  // Verifica se a resposta possui a propriedade 'nome'\n        done();\n    });",
+              "err": {},
+              "uuid": "bcf47c2b-b0a7-4dcf-9308-366491f2454b",
+              "parentUUID": "89f48159-6680-4f93-9e1c-6de574807b36",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "55a83e9b-3cb1-4ffc-86ec-f7a84328c54a",
+            "bcf47c2b-b0a7-4dcf-9308-366491f2454b"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 67,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "04da3b5f-dbee-4896-942f-1afb049f3d81",
+          "title": "API Login",
+          "fullFile": "C:\\Users\\anita\\Music\\LPE\\Backend\\test\\loginTest.js",
+          "file": "\\test\\loginTest.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve realizar o login e retornar um token",
+              "fullTitle": "API Login Deve realizar o login e retornar um token",
+              "timedOut": false,
+              "duration": 34,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const user = {\n    email: 'admin@ifsul.edu.br',\n    senha: '123456'\n};\nchai.request('http://localhost:3003')\n    .post('/login')\n    .send(user)\n    .end((err, res) => {\n        if (err) {\n            console.log('Erro na requisição:', err);\n            return done(err);\n        }\n        console.log('Resposta do servidor:', res.body);\n        expect(res).to.have.status(200);\n        expect(res.body).to.have.property('auth').eql(true);\n        expect(res.body).to.have.property('token');\n        setToken(res.body.token);\n        done();\n    });",
+              "err": {},
+              "uuid": "666e9735-9941-41a0-b6af-11c97f5d7ef9",
+              "parentUUID": "04da3b5f-dbee-4896-942f-1afb049f3d81",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "666e9735-9941-41a0-b6af-11c97f5d7ef9"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 34,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "8.4.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}

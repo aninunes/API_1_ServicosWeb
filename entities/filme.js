@@ -1,12 +1,35 @@
-class Filme {
-    constructor(id, titulo, descricao, anoLancamento, generoId, generoNome) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.anoLancamento = anoLancamento;
-        this.generoId = generoId;
-        this.generoNome = generoNome; // Adicionado este campo
-    }
-}
+import { DataTypes } from 'sequelize';
+import sequelize from '../config.js';
 
-module.exports = Filme;
+const Filme = sequelize.define('Filme', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    titulo: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    descricao: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    ano_lancamento: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    genero_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'genero',
+            key: 'id'
+        },
+        allowNull: false
+    }
+}, {
+    tableName: 'filme',
+    timestamps: false
+});
+
+export default Filme;

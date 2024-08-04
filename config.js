@@ -1,24 +1,25 @@
-const { Pool } = require('pg');
+import { Sequelize } from 'sequelize';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-let pool = null;
+let sequelize;
 
 if (isProduction) {
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+        dialect: 'postgres',
+        protocol: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
         }
     });
 } else {
-    pool = new Pool({
-        user: 'gubqcsxq',
+    sequelize = new Sequelize('gubqcsxq', 'gubqcsxq', '2mUagw83C77Soq4j0PyX5BBJtR-78kcX', {
         host: 'isabelle.db.elephantsql.com',
-        database: 'gubqcsxq',
-        password: '2mUagw83C77Soq4j0PyX5BBJtR-78kcX',
-        port: 5432
+        dialect: 'postgres'
     });
 }
 
-module.exports = { pool };
+export default sequelize;

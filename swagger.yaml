@@ -1,0 +1,181 @@
+openapi: 3.0.0
+info:
+  title: API de Filmes e Gêneros
+  version: 1.0.0
+paths:
+  /filme:
+    get:
+      summary: Lista todos os filmes
+      tags:
+        - Filme
+      responses:
+        '200':
+          description: Uma lista de filmes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filme'
+    post:
+      summary: Adiciona um novo filme
+      tags:
+        - Filme
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filme'
+      responses:
+        '200':
+          description: Filme adicionado com sucesso
+  /filme/{id}:
+    get:
+      summary: Recupera um filme pelo ID
+      tags:
+        - Filme
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dados do filme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filme'
+    put:
+      summary: Atualiza um filme
+      tags:
+        - Filme
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filme'
+      responses:
+        '200':
+          description: Filme atualizado com sucesso
+    delete:
+      summary: Remove um filme
+      tags:
+        - Filme
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Filme removido com sucesso
+  /genero:
+    get:
+      summary: Lista todos os gêneros
+      tags:
+        - Genero
+      responses:
+        '200':
+          description: Uma lista de gêneros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genero'
+    post:
+      summary: Adiciona um novo gênero
+      tags:
+        - Genero
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genero'
+      responses:
+        '200':
+          description: Gênero adicionado com sucesso
+  /genero/{id}:
+    get:
+      summary: Recupera um gênero pelo ID
+      tags:
+        - Genero
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dados do gênero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genero'
+    put:
+      summary: Atualiza um gênero
+      tags:
+        - Genero
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genero'
+      responses:
+        '200':
+          description: Gênero atualizado com sucesso
+    delete:
+      summary: Remove um gênero
+      tags:
+        - Genero
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Gênero removido com sucesso
+components:
+  schemas:
+    Filme:
+      type: object
+      properties:
+        id:
+          type: integer
+        titulo:
+          type: string
+        descricao:
+          type: string
+        anoLancamento:
+          type: integer
+        generoId:
+          type: integer
+        generoNome:
+          type: string
+    Genero:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        descricao:
+          type: string

@@ -1,26 +1,29 @@
-const { getGenerosDB, addGeneroDB, updateGeneroDB, deleteGeneroDB, getGeneroPorIdDB } = require('../usecases/generoUseCases');
+import Genero from '../entities/genero.js';
 
-const getGeneros = async (request, response) => {
-    await getGenerosDB()
-        .then(data => response.status(200).json(data))
-        .catch(err => response.status(400).json({
-            status: 'error',
-            message: 'Erro ao consultar os gêneros: ' + err
-        }));
-}
+const getGeneros = async (req, res) => {
+    try {
+        const generos = await Genero.findAll();
+        res.status(200).json(generos);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
-const addGenero = async (request, response) => {
-    await addGeneroDB(request.body)
-        .then(data => response.status(200).json({
-            status: 'success',
-            message: 'Gênero criado',
-            objeto: data
-        }))
-        .catch(err => response.status(400).json({
-            status: 'error',
-            message: err
-        }));
-}
+const addGenero = async (req, res) => {
+    try {
+        const { nome, descricao } = req.body;
+        if (!nome || !descricao) {
+            return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
+        }
+        const novoGenero = await Genero.create(req.body);
+        res.status(200).json(novoGenero);  // Retorna o objeto completo do novo gênero criado
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
 
 const updateGenero = async (request, response) => {
     await updateGeneroDB(request.body)
@@ -56,4 +59,4 @@ const getGeneroPorId = async (request, response) => {
         }));
 }
 
-module.exports = { getGeneros, addGenero, updateGenero, deleteGenero, getGeneroPorId }
+export { getGeneros, addGenero, updateGenero, deleteGenero, getGeneroPorId };

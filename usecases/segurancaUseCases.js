@@ -1,19 +1,20 @@
-const { pool } = require('../config');
-const Usuario = require('../entities/usuario');
+import Usuario from '../entities/usuario.js';
 
 const autenticaUsuarioDB = async (body) => {
     try {
         const { email, senha } = body;
-        const results = await pool.query(`SELECT * FROM usuarios WHERE email = $1 AND senha = $2`,
-                                    [email, senha]);
-        if (results.rowCount == 0){
+        console.log('Tentando autenticar usuário com email:', email, 'e senha:', senha);
+        const usuario = await Usuario.findOne({ where: { email, senha } });
+        if (!usuario) {
+            console.log('Usuário não encontrado ou senha inválida');
             throw "Usuário ou senha inválidos";
         }
-        const usuario = results.rows[0];
-        return new Usuario(usuario.email, usuario.tipo, usuario.telefone, usuario.nome );
-    } catch(err){
-        throw "Erro ao autenticar o usuário: " + err; 
+        console.log('Usuário autenticado:', usuario.dataValues);
+        return usuario;
+    } catch (err) {
+        console.log('Erro ao autenticar usuário:', err);
+        throw "Erro ao autenticar o usuário: " + err;
     }
 }
 
-module.exports = { autenticaUsuarioDB }
+export { autenticaUsuarioDB };

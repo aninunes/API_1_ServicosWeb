@@ -1,10 +1,8 @@
-const { pool } = require('../config');
-const Genero = require('../entities/genero');
+import Genero from '../entities/genero.js';
 
 const getGenerosDB = async () => {
     try {
-        const { rows } = await pool.query('SELECT * FROM genero ORDER BY nome');
-        return rows.map((genero) => new Genero(genero.id, genero.nome, genero.descricao));
+        return await Genero.findAll();
     } catch (err) {
         throw "Erro: " + err;
     }
@@ -12,11 +10,8 @@ const getGenerosDB = async () => {
 
 const addGeneroDB = async (body) => {
     try {
-        const { nome, descricao } = body;
-        const results = await pool.query(`INSERT INTO genero (nome, descricao)
-        VALUES ($1, $2) RETURNING id, nome, descricao`, [nome, descricao]);
-        const genero = results.rows[0];
-        return new Genero(genero.id, genero.nome, genero.descricao);
+        const genero = await Genero.create(body);
+        return genero;
     } catch (err) {
         throw "Erro: " + err;
     }
@@ -24,14 +19,11 @@ const addGeneroDB = async (body) => {
 
 const updateGeneroDB = async (body) => {
     try {
-        const { id, nome, descricao } = body;
-        const results = await pool.query(`UPDATE genero SET nome = $2, descricao = $3
-        WHERE id = $1 RETURNING id, nome, descricao`, [id, nome, descricao]);
-        if (results.rowCount == 0) {
-            throw `Nenhum registro encontrado com o ID ${id} para ser alterado`;
-        }
-        const genero = results.rows[0];
-        return new Genero(genero.id, genero.nome, genero.descricao);
+        const genero = await Genero.findByPk(body.id);
+        if (!genero) throw `Nenhum registro encontrado com o ID ${body.id} para ser alterado`;
+
+        await genero.update(body);
+        return genero;
     } catch (err) {
         throw "Erro ao alterar: " + err;
     }
@@ -39,12 +31,11 @@ const updateGeneroDB = async (body) => {
 
 const deleteGeneroDB = async (id) => {
     try {
-        const results = await pool.query(`DELETE FROM genero WHERE id = $1`, [id]);
-        if (results.rowCount == 0) {
-            throw `Nenhum registro encontrado com o ID ${id} para ser removido`;
-        } else {
-            return "Registro removido com sucesso";
-        }
+        const genero = await Genero.findByPk(id);
+        if (!genero) throw `Nenhum registro encontrado com o ID ${id} para ser removido`;
+
+        await genero.destroy();
+        return "Gênero removido com sucesso";
     } catch (err) {
         throw "Erro ao remover: " + err;
     }
@@ -52,16 +43,13 @@ const deleteGeneroDB = async (id) => {
 
 const getGeneroPorIdDB = async (id) => {
     try {
-        const results = await pool.query(`SELECT * FROM genero WHERE id = $1`, [id]);
-        if (results.rowCount == 0) {
-            throw `Nenhum registro encontrado com o ID ${id}`;
-        } else {
-            const genero = results.rows[0];
-            return new Genero(genero.id, genero.nome, genero.descricao);
-        }
+        const genero = await Genero.findByPk(id);
+        if (!genero) throw `Nenhum registro encontrado com o ID ${id}`;
+
+        return genero;
     } catch (err) {
         throw "Erro ao recuperar: " + err;
     }
 }
 
-module.exports = { getGenerosDB, addGeneroDB, updateGeneroDB, deleteGeneroDB, getGeneroPorIdDB };
+export { getGenerosDB, addGeneroDB, updateGeneroDB, deleteGeneroDB, getGeneroPorIdDB };

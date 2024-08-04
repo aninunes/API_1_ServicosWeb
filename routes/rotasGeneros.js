@@ -1,18 +1,11 @@
-const { Router } = require('express');
+import { Router } from 'express';
+import { verificaJWT } from '../controllers/segurancaController.js';
+import { getGeneros, addGenero } from '../controllers/generoController.js';
 
-const { verificaJWT } = require('../controllers/segurancaController');
-
-const { getGeneros, addGenero, updateGenero, deleteGenero, getGeneroPorId } = require('../controllers/generoController');
-
-const rotasGeneros = new Router();
+const rotasGeneros = Router();
 
 rotasGeneros.route('/genero')
     .get(verificaJWT, getGeneros)
-    .post(verificaJWT, addGenero)
-    .put(verificaJWT, updateGenero);
+    .post(verificaJWT, addGenero);
 
-rotasGeneros.route('/genero/:id')
-    .get(verificaJWT, getGeneroPorId)
-    .delete(verificaJWT, deleteGenero);
-
-module.exports = { rotasGeneros };
+export { rotasGeneros };

@@ -1,9 +1,8 @@
-const { Router } = require('express');
+import { Router } from 'express';
+import { verificaJWT } from '../controllers/segurancaController.js';
+import { getFilmes, addFilme, updateFilme, deleteFilme, getFilmePorId } from '../controllers/filmeController.js';
 
-const { verificaJWT } = require('../controllers/segurancaController');
-const { getFilmes, addFilme, updateFilme, deleteFilme, getFilmePorId } = require('../controllers/filmeController');
-
-const rotasFilmes = new Router();
+const rotasFilmes = Router();
 
 rotasFilmes.route('/filme')
     .get(verificaJWT, getFilmes)
@@ -14,4 +13,4 @@ rotasFilmes.route('/filme/:id')
     .get(verificaJWT, getFilmePorId)
     .delete(verificaJWT, deleteFilme);
 
-module.exports = { rotasFilmes };
+export { rotasFilmes };

@@ -1,18 +1,13 @@
-const { Router } = require('express');
+import { Router } from 'express';
+import { rotasGeneros } from './rotasGeneros.js';
+import { rotasFilmes } from './rotasFilmes.js';
+import { login } from '../controllers/segurancaController.js';
 
-const { rotasCategorias } = require('./rotasCategorias');
-const { rotasProdutos } = require('./rotasProdutos');
-const { rotasGeneros } = require('./rotasGeneros');
-const { rotasFilmes } = require('./rotasFilmes'); 
-const { login } = require('../controllers/segurancaController');
+const rotas = Router();
 
-const rotas = new Router();
+rotas.post("/login", login);
 
-rotas.route("/login").post(login);
-
-rotas.use(rotasCategorias);
-rotas.use(rotasProdutos);
 rotas.use(rotasGeneros);
 rotas.use(rotasFilmes);
 
-module.exports = rotas;
+export default rotas;
